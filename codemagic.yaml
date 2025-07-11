@@ -1,3 +1,19 @@
 workflows:
   build-android:
-    name: Build APK
+    name: Build APK (Debug)
+    max_build_duration: 15
+    environment:
+      vars:
+        PACKAGE_NAME: "com.tabadol"
+    scripts:
+      - name: Make wrapper executable
+        script: |
+          chmod +x ./gradlew
+      - name: Ensure wrapper exists
+        script: |
+          ./gradlew wrapper
+      - name: Build Debug APK
+        script: |
+          ./gradlew assembleDebug
+    artifacts:
+      - app/build/outputs/apk/debug/*.apk
